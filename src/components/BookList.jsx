@@ -30,12 +30,19 @@ const BookList = ({ books }) => {
     updateDoc(bookRef, {
       title: 'updated title',
       author: 'updated author',
-    });
+    })
+      .then(() => {
+        console.log('Updated the document!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <>
-      <h1>BookList</h1>
+      <br />
+      <h3>BookList</h3>
       <ul style={list}>
         {books.map((book) => (
           <li key={book.id} style={listItem}>
