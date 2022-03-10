@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from './utils/firebase';
+import AddBook from './components/AddBook';
 
 function App() {
   const [books, setBooks] = useState();
@@ -13,7 +14,7 @@ function App() {
     const queryBook = query(booksRef, where('author', '==', 'jk rollin'));
 
     // Function to fetch the data from the books referenec
-    onSnapshot(queryBook, (snapshot) => {
+    onSnapshot(booksRef, (snapshot) => {
       // I have initialized an empty array
       let fetchedBooks = [];
 
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello!</h1>
+      <AddBook />
     </div>
   );
 }
