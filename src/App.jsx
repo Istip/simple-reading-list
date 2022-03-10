@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from './utils/firebase';
 import AddBook from './components/AddBook';
+import BookList from './components/BookList';
 
 function App() {
   const [books, setBooks] = useState();
@@ -28,13 +29,16 @@ function App() {
     });
   }, []);
 
-  console.log(books);
+  if (!books) {
+    return 'Loading...';
+  }
 
   return (
-    <div className="App">
-      <h1>Hello!</h1>
+    <>
+      <h1>Da books</h1>
       <AddBook />
-    </div>
+      <BookList books={books} />
+    </>
   );
 }
 
