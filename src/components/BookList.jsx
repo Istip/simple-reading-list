@@ -1,14 +1,15 @@
-import { doc, deleteDoc } from 'firebase/firestore';
+import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/firebase';
 
 const BookList = ({ books }) => {
+  // DELETE Functionality
   const onDelete = (e, id) => {
     e.preventDefault();
 
     // Creating the reference of the doc to be deleted
     const bookRef = doc(db, 'books', id);
 
-    // Calling the function
+    // Calling the delete function from firebase
     deleteDoc(bookRef)
       .then(() => {
         console.log('Deleted the document!');
@@ -16,6 +17,20 @@ const BookList = ({ books }) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  // UPDATE Functionality
+  const onUpdate = (e, id) => {
+    e.preventDefault();
+
+    // Creating the reference of the doc to be deleted
+    const bookRef = doc(db, 'books', id);
+
+    // Calling the update function from firebase
+    updateDoc(bookRef, {
+      title: 'updated title',
+      author: 'updated author',
+    });
   };
 
   return (
@@ -31,7 +46,8 @@ const BookList = ({ books }) => {
             </p>
 
             <div>
-              <button onClick={(e) => onDelete(e, book.id)}>❌</button>
+              <button onClick={(e) => onDelete(e, book.id)}>❌</button>{' '}
+              <button onClick={(e) => onUpdate(e, book.id)}>Update</button>
             </div>
           </li>
         ))}
