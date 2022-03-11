@@ -39,6 +39,10 @@ const BookList = ({ books }) => {
       });
   };
 
+  if (!books) {
+    return 'Loading...';
+  }
+
   return (
     <>
       <br />

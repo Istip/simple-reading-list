@@ -29,9 +29,7 @@ function App() {
     });
   }, []);
 
-  if (!books) {
-    return 'Loading...';
-  }
+
 
   return (
     <>
