@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { db } from './utils/firebase';
 import AddBook from './components/AddBook';
 import BookList from './components/BookList';
@@ -8,8 +8,20 @@ import Authentication from './components/Authentication';
 
 function App() {
   const [books, setBooks] = useState();
+  const [user, setUser] = useState(null);
 
   const auth = getAuth();
+
+  // Function to sign out the user
+  const onSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     // Firestore collecton reference
@@ -18,7 +30,7 @@ function App() {
     // Queries
     const queryBook = query(booksRef, where('author', '==', 'jk rollin'));
 
-    // Function to fetch the data from the books referenec
+    // Function to fetch the data from the books referenece
     onSnapshot(booksRef, (snapshot) => {
       // I have initialized an empty array
       let fetchedBooks = [];
@@ -36,9 +48,18 @@ function App() {
   return (
     <>
       <h1>Da books</h1>
-      <Authentication />
-      <AddBook />
-      <BookList books={books} />
+
+      {!user && <Authentication auth={auth} setUser={setUser} />}
+
+      {user && (
+        <>
+          <button onClick={onSignOut}>
+            <h1>SIGN OUT</h1>
+          </button>
+          <AddBook />
+          <BookList books={books} />
+        </>
+      )}
     </>
   );
 }

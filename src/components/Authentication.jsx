@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
-const Authentication = () => {
-  const initialState = { name: '', password: '', passwordConfirm: '' };
+const Authentication = ({ auth, setUser }) => {
+  const initialState = { email: '', password: '', passwordConfirm: '' };
   const [formData, setFormData] = useState(initialState);
   const [isLogin, setIsLogin] = useState(false);
 
-  const { name, password, passwordConfirm } = formData;
+  const { email, password, passwordConfirm } = formData;
 
   // Functions
   const onChange = (e) => {
@@ -15,25 +19,61 @@ const Authentication = () => {
   // Submitting the form
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (isLogin) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((credential) => {
+          setUser(credential.user);
+
+          // dummy stuff
+          console.log('login credentials: ', credential.user);
+          setFormData(initialState);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (!isLogin) {
+      if (password !== passwordConfirm) {
+        console.log('❌ Passwords must match!');
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((credential) => {
+          setUser(credential.user);
+
+          // dummy stuff
+          console.log('sign up credentials: ', credential.user);
+          setFormData(initialState);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+
+  useEffect(() => {
+    setFormData(initialState);
+  }, [isLogin]);
 
   return (
     <>
       <h3>{isLogin ? 'Login' : 'Sign Up'}</h3>
       <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? 'Change to Sign Up' : 'Change to Sign Up'}
+        {isLogin ? 'Change to Sign Up' : 'Change to Login'}
       </button>
 
       <br />
 
-      <form>
-        <label htmlFor="name">
-          <small>Name: </small>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="email">
+          <small>Email: </small>
           <input
-            type="text"
-            value={name}
-            id="name"
-            name="name"
+            type="email"
+            value={email}
+            id="email"
+            name="email"
             onChange={onChange}
             required
           />
@@ -44,7 +84,7 @@ const Authentication = () => {
         <label htmlFor="password">
           <small>Password: </small>
           <input
-            type="text"
+            type="password"
             value={password}
             id="password"
             name="password"
@@ -59,7 +99,7 @@ const Authentication = () => {
           <label htmlFor="passwordConfirm">
             <small>Confirm password: </small>
             <input
-              type="text"
+              type="password"
               value={passwordConfirm}
               id="passwordConfirm"
               name="passwordConfirm"
@@ -71,9 +111,7 @@ const Authentication = () => {
 
         <br />
 
-        <button type="submit" onSubmit={onSubmit}>
-          {isLogin ? 'Login' : 'Sign Up'}
-        </button>
+        <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
       </form>
     </>
   );
