@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../utils/firebase';
 
 const AddBook = () => {
@@ -20,7 +20,7 @@ const AddBook = () => {
     e.preventDefault();
 
     // Adding the document to the collection
-    addDoc(booksRef, formData)
+    addDoc(booksRef, { ...formData, createdAt: serverTimestamp() })
       .then(() => {
         console.log('Form submitted with data: ', formData);
         // Resetting the input values to be empty again
