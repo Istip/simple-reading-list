@@ -50,6 +50,17 @@ const BookList = ({ books }) => {
       <ul className="book-list">
         {books.map((book) => (
           <li key={book.id} className="book-list-item">
+            <small>
+              🕐{' '}
+              {new Date(book.createdAt.seconds * 1000).toLocaleTimeString(
+                'hu-HU',
+                {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                }
+              )}
+            </small>
+
             <h2>{book.title}</h2>
 
             <small>{book.author}</small>

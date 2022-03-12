@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  orderBy,
+} from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
 import { db } from './utils/firebase';
 import AddBook from './components/AddBook';
@@ -10,6 +16,7 @@ import './App.css';
 function App() {
   const [books, setBooks] = useState();
   const [user, setUser] = useState(null);
+  const [order, setOrder] = useState('desc');
 
   const auth = getAuth();
 
@@ -29,10 +36,14 @@ function App() {
     const booksRef = collection(db, 'books');
 
     // Queries
-    const queryBook = query(booksRef, where('author', '==', 'jk rollin'));
+    const queryBook = query(
+      booksRef,
+      // where('author', '==', 'jk rollin'),
+      orderBy('createdAt', order)
+    );
 
     // Function to fetch the data from the books referenece
-    onSnapshot(booksRef, (snapshot) => {
+    onSnapshot(queryBook, (snapshot) => {
       // I have initialized an empty array
       let fetchedBooks = [];
 
@@ -44,7 +55,7 @@ function App() {
       // Finally added fetched data to the local state
       setBooks(fetchedBooks);
     });
-  }, []);
+  }, [order]);
 
   return (
     <div className="app-wrapper">
@@ -63,6 +74,9 @@ function App() {
         {user && (
           <>
             <AddBook />
+            <button onClick={() => setOrder(order === 'desc' ? 'asc' : 'desc')}>
+              {order === 'desc' ? 'Ascending' : 'Descending'}
+            </button>
             <BookList books={books} />
           </>
         )}
