@@ -3,11 +3,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import './Authentication.css';
 
 const Authentication = ({ auth, setUser }) => {
   const initialState = { email: '', password: '', passwordConfirm: '' };
   const [formData, setFormData] = useState(initialState);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const { email, password, passwordConfirm } = formData;
 
@@ -58,9 +59,9 @@ const Authentication = ({ auth, setUser }) => {
   }, [isLogin]);
 
   return (
-    <>
+    <div className="container">
       <h3>{isLogin ? 'Login' : 'Sign Up'}</h3>
-      <button onClick={() => setIsLogin(!isLogin)}>
+      <button className="button-switcher" onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? 'Change to Sign Up' : 'Change to Login'}
       </button>
 
@@ -93,27 +94,28 @@ const Authentication = ({ auth, setUser }) => {
           />
         </label>
 
-        <br />
-
         {!isLogin && (
-          <label htmlFor="passwordConfirm">
-            <small>Confirm password: </small>
-            <input
-              type="password"
-              value={passwordConfirm}
-              id="passwordConfirm"
-              name="passwordConfirm"
-              onChange={onChange}
-              required
-            />
-          </label>
+          <>
+            <br />
+            <label htmlFor="passwordConfirm">
+              <small>Confirm password: </small>
+              <input
+                type="password"
+                value={passwordConfirm}
+                id="passwordConfirm"
+                name="passwordConfirm"
+                onChange={onChange}
+                required
+              />
+            </label>
+          </>
         )}
 
         <br />
 
         <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
       </form>
-    </>
+    </div>
   );
 };
 

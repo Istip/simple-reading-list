@@ -5,6 +5,7 @@ import { db } from './utils/firebase';
 import AddBook from './components/AddBook';
 import BookList from './components/BookList';
 import Authentication from './components/Authentication';
+import './App.css';
 
 function App() {
   const [books, setBooks] = useState();
@@ -46,21 +47,27 @@ function App() {
   }, []);
 
   return (
-    <>
-      <h1>Da books</h1>
+    <div className="app-wrapper">
+      <div className="header">
+        <h1>Da books</h1>
+        {user && (
+          <button className="btn-logout" onClick={onSignOut}>
+            <b>LOG OUT</b>
+          </button>
+        )}
+      </div>
 
       {!user && <Authentication auth={auth} setUser={setUser} />}
 
-      {user && (
-        <>
-          <button onClick={onSignOut}>
-            <h1>SIGN OUT</h1>
-          </button>
-          <AddBook />
-          <BookList books={books} />
-        </>
-      )}
-    </>
+      <>
+        {user && (
+          <>
+            <AddBook />
+            <BookList books={books} />
+          </>
+        )}
+      </>
+    </div>
   );
 }
 

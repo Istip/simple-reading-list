@@ -1,5 +1,6 @@
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/firebase';
+import './BookList.css';
 
 const BookList = ({ books }) => {
   // DELETE Functionality
@@ -45,39 +46,33 @@ const BookList = ({ books }) => {
 
   return (
     <>
-      <br />
-      <h3>BookList</h3>
-      <ul style={list}>
+      <h1 className="title">BookList</h1>
+      <ul className="book-list">
         {books.map((book) => (
-          <li key={book.id} style={listItem}>
-            <p>
-              <b>{book.title}</b>
+          <li key={book.id} className="book-list-item">
+            <h2>{book.title}</h2>
 
-              <small> - {book.author}</small>
-            </p>
+            <small>{book.author}</small>
 
-            <div>
-              <button onClick={(e) => onDelete(e, book.id)}>❌</button>{' '}
-              <button onClick={(e) => onUpdate(e, book.id)}>Update</button>
+            <div className="btn-group">
+              <button
+                className="btn-delete"
+                onClick={(e) => onDelete(e, book.id)}
+              >
+                Delete
+              </button>
+              <button
+                className="btn-success"
+                onClick={(e) => onUpdate(e, book.id)}
+              >
+                Update
+              </button>
             </div>
           </li>
         ))}
       </ul>
     </>
   );
-};
-
-// styles
-const list = {
-  padding: 0,
-};
-
-const listItem = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: '10px',
-  margin: '20px',
 };
 
 export default BookList;

@@ -36,20 +36,6 @@ const AddBook = () => {
       <br />
       <h3>Add a new Book</h3>
       <form onSubmit={(e) => onSubmit(e)}>
-        <label htmlFor="author">
-          <small>Author: </small>
-          <input
-            type="text"
-            value={author}
-            id="author"
-            name="author"
-            onChange={onChange}
-            required
-          />
-        </label>
-
-        <br />
-
         <label htmlFor="title">
           <small>Title: </small>
           <input
@@ -57,6 +43,20 @@ const AddBook = () => {
             value={title}
             id="title"
             name="title"
+            onChange={onChange}
+            required
+          />
+        </label>
+
+        <br />
+
+        <label htmlFor="author">
+          <small>Author: </small>
+          <input
+            type="text"
+            value={author}
+            id="author"
+            name="author"
             onChange={onChange}
             required
           />

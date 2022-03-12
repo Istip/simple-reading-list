@@ -1,0 +1,69 @@
+.app-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.app-wrapper h1 {
+  color: #0c1e20;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px;
+  gap: 10px;
+  width: 400px;
+  border-bottom: 1px solid #e2f4f6;
+  padding-bottom: 20px;
+}
+
+.btn-logout {
+  margin-top: 10px;
+  background: #bbe7eb;
+  padding: 10px 0;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  color: #0c1e20;
+  cursor: pointer;
+  transition: 250ms ease;
+  flex: 0.5;
+}
+
+.btn-logout:hover {
+  background: #95d9e0;
+}
+
+.btn-delete {
+  background: #c94848;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: 250ms ease;
+}
+
+.btn-delete:hover {
+  background: #9f3939;
+}
+
+.btn-success {
+  background: #399f3c;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: 250ms ease;
+}
+
+.btn-success:hover {
+  background: #2a752c;
+}

@@ -1,0 +1,29 @@
+.title {
+  margin: 40px 0 10px;
+}
+
+.book-list {
+  padding: 0;
+}
+
+.book-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #e2f4f6;
+  border-radius: 20px;
+  width: 400px;
+  color: #0c1e20;
+}
+
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
